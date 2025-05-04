@@ -4,6 +4,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 export const FilterButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [sortAnchorEl, setSortAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -11,7 +12,12 @@ export const FilterButton = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setSortAnchorEl(null);
   };
+
+  const handleSortClick = (event) => {
+    setSortAnchorEl(event.currentTarget);
+  }
 
   return (
     <>
@@ -19,9 +25,22 @@ export const FilterButton = () => {
         <FilterListIcon fontSize="large" />
       </IconButton>
 
+      {/* Main menu for filter or sort*/}
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem disabled>Sort</MenuItem>
+        <MenuItem onClick={handleSortClick}>Sort</MenuItem>
         <MenuItem disabled>Filter</MenuItem>
+      </Menu>
+
+      {/*Menu for sort*/}
+      <Menu
+        anchorEl={sortAnchorEl}
+        open={Boolean(sortAnchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem>Newest</MenuItem>
+        <MenuItem>Oldest</MenuItem>
+        <MenuItem>Alphabetical (ascending)</MenuItem>
+        <MenuItem>Alphabetical (descending)</MenuItem>
       </Menu>
     </>
   );
