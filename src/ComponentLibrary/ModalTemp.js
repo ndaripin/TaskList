@@ -30,8 +30,7 @@ export const ModalTemp = ({ open, onClose, onSubmit }) => {
         <Typography variant="h6" mb={2}>Add New Task</Typography>
         <TextField
           fullWidth
-          label="Task"
-          variant="outlined"
+          placeholder="Task"
           value={taskInput}
           onChange={(e) => setTaskInput(e.target.value)}
         />

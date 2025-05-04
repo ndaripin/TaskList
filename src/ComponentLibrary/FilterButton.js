@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button } from '@mui/material';
+import { IconButton } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 export const FilterButton = () => {
   return (
-    <Button sx={{color: 'teal'}}>
+    <IconButton sx={{color: 'teal'}}>
         <FilterListIcon fontSize='large'/>
-    </Button>
+    </IconButton>
   )
 }
