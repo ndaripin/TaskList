@@ -5,7 +5,6 @@ import { FilterButton } from '../ComponentLibrary/FilterButton';
 import { SearchBar } from '../ComponentLibrary/SearchBar';
 import { ModalTemp } from '../ComponentLibrary/ModalTemp';
 import { TaskItem } from '../ComponentLibrary/TaskItem';
-import { grey } from '@mui/material/colors';
 
 export const TaskMain = () => {
   const [tasks, setTasks] = useState([]);
@@ -16,6 +15,10 @@ export const TaskMain = () => {
 
   const handleTaskSubmit = (newTask) => {
     setTasks([...tasks, newTask]);
+  };
+
+  const handleDeleteTask = (taskToDelete) => {
+    setTasks(tasks.filter((task) => task !== taskToDelete));
   };
 
   return (
@@ -34,7 +37,7 @@ export const TaskMain = () => {
           >
             <List sx={{ width: '100%' }} spacing={3}>
               {tasks.map((task, index) => (
-                <TaskItem key={index} task={task}/>
+                <TaskItem key={index} task={task} onDelete={handleDeleteTask}/>
               ))}
             </List>
           </Box>

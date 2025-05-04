@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox, IconButton, ListItem, ListItemText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const TaskItem = ({ task }) => {
+export const TaskItem = ({ task, onDelete }) => {
   return (
     <ListItem sx={{
         bgcolor: 'whitesmoke',
@@ -13,7 +13,7 @@ export const TaskItem = ({ task }) => {
         alignItems: 'center',
       }} 
       secondaryAction={
-        <IconButton edge="end">
+        <IconButton edge="end" onClick={() => onDelete(task)}>
           <DeleteIcon />
         </IconButton>
     }>
