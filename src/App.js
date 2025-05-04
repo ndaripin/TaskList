@@ -1,4 +1,3 @@
-import './App.css';
 import { TaskMain } from './Tasks/TaskMain';
 
 function App() {
