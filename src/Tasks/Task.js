@@ -13,7 +13,7 @@ export const Task = () => {
 
   const handleAddTask = () => {
     setTasks([...tasks, { id: uuidv4(), text: '', completed: false }]);
-  };
+  };  
 
   const handleToggle = (id) => {
     setTasks(tasks.map(task =>
@@ -22,14 +22,27 @@ export const Task = () => {
   };
 
   const handleDelete = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+    if (tasks.length === 1) {
+      setTasks([{ ...tasks[0], text: '' }]);
+    } else {
+      setTasks(tasks.filter(task => task.id !== id));
+    }
   };
+  
 
   const handleEdit = (id, newText) => {
     setTasks(tasks.map(task =>
       task.id === id ? { ...task, text: newText } : task
     ));
   };
+
+  const handleKeyDown = (e, id, text) => {
+    if (e.key === 'Enter' && text.trim() !== '') {
+      const isLast = tasks[tasks.length - 1].id === id;
+      if (isLast) handleAddTask();
+    }
+  };
+  
 
   return (
     <Box sx={{ pl: '20%', pr: '20%', pt: 10 }}>
@@ -53,6 +66,7 @@ export const Task = () => {
               onToggle={() => handleToggle(task.id)}
               onDelete={() => handleDelete(task.id)}
               onEdit={(newText) => handleEdit(task.id, newText)}
+              onKeyDown={(e) => handleKeyDown(e, task.id, task.text)}
             />
           ))}
         </Stack>

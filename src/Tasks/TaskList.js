@@ -2,14 +2,13 @@ import React from 'react';
 import { Checkbox, IconButton, ListItem, TextField, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const TaskList = ({ text, onDelete, completed, onToggle, onEdit }) => {
+export const TaskList = ({ text, onDelete, completed, onToggle, onEdit, onKeyDown}) => {
   return (
     <ListItem
       sx={{
         bgcolor: 'whitesmoke',
-        borderRadius: 1,
-        p: 1.5,
-        mb: 1,
+        borderRadius: 4,
+        mb: 2,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -24,10 +23,13 @@ export const TaskList = ({ text, onDelete, completed, onToggle, onEdit }) => {
           variant="standard"
           value={text}
           onChange={(e) => onEdit(e.target.value)}
+          onKeyDown={onKeyDown}
+          placeholder="Add a task"
           InputProps={{
             disableUnderline: true,
             sx: {
               textDecoration: completed ? 'line-through' : 'none',
+              opacity: completed ? 0.5 : 1,
               fontSize: '1rem',
             },
           }}
@@ -45,4 +47,5 @@ export const TaskList = ({ text, onDelete, completed, onToggle, onEdit }) => {
     </ListItem>
   );
 };
+
 
