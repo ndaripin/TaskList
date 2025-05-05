@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, useMediaQuery, useTheme, Tooltip } from '@mui/material';
 
-export const PillButton = ({ onClick, icon, label, bgColor = 'purple', Color = 'white' }) => {
+export const PillButton = ({ onClick, icon, label, bgColor = 'white', Color = 'purple' }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
