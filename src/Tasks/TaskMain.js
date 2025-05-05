@@ -9,11 +9,16 @@ import { TaskItem } from '../ComponentLibrary/TaskItem';
 export const TaskMain = () => {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortMode, setSortMode] = useState('newest');
 
   const handleAddClick = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
 
-  const handleTaskSubmit = (newTask) => {
+  const handleTaskSubmit = (text) => {
+    const newTask = {
+      text,
+      createdAt: new Date().toISOString(),
+    };
     setTasks([...tasks, newTask]);
   };
 
@@ -21,12 +26,24 @@ export const TaskMain = () => {
     setTasks(tasks.filter((task) => task !== taskToDelete));
   };
 
+  const handleSortChange = (mode) => {
+    setSortMode(mode);
+  };
+
+  const sortedTasks = [...tasks].sort((a, b) => {
+    if (sortMode === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
+    if (sortMode === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+    if (sortMode === 'az') return a.text.localeCompare(b.text);
+    if (sortMode === 'za') return b.text.localeCompare(a.text);
+    return 0;
+  });
+
   return (
     <Box padding={5}>
       <Stack spacing={3}>
         <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
           <SearchBar placeholderText="Search for tasks" />
-          <FilterButton />
+          <FilterButton onSortChange={handleSortChange}/>
           <AddButton onClick={handleAddClick} />
         </Box>
         <Box display="flex" justifyContent="center">
@@ -36,8 +53,9 @@ export const TaskMain = () => {
             }}
           >
             <List sx={{ width: '100%' }} spacing={3}>
-              {tasks.map((task, index) => (
-                <TaskItem key={index} task={task} onDelete={handleDeleteTask}/>
+            {sortedTasks.map((task, index) => (
+                <TaskItem key={index} text={task.text} 
+                onDelete={() => handleDeleteTask(task)} />
               ))}
             </List>
           </Box>
