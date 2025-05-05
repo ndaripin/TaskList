@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
 
-export const PillButton = ({ onClick, icon, label, bgColor='white', Color='purple' }) => {
+export const RectangleButton = ({ onClick, icon, label, bgColor='white', Color='purple' }) => {
   return (
     <Button 
       onClick={onClick} 
@@ -9,7 +9,7 @@ export const PillButton = ({ onClick, icon, label, bgColor='white', Color='purpl
       startIcon={icon}
       sx={{ 
         bgcolor: bgColor, 
-        borderRadius: '9999px', 
+        borderRadius: 2, 
         color: Color, 
         px: 2, 
         textTransform: 'none'
@@ -19,5 +19,3 @@ export const PillButton = ({ onClick, icon, label, bgColor='white', Color='purpl
     </Button>
   );
 };
-
-

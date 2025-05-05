@@ -46,18 +46,16 @@ export const Task = () => {
 
   return (
     <Box sx={{ pl: '20%', pr: '20%', pt: 10 }}>
-      <Stack spacing={3}>
-
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box display="flex" justifyContent="space-between" alignItems="center" sx={{paddingBottom : 4}}>
           <Typography variant='h4'>
-            Welcome, Naimi
+            Welcome!
           </Typography>
           <PillButton icon={<AddRoundedIcon fontSize="small" />} label={"New Task"} bgColor={'purple'} Color={'white'} onClick={handleAddTask}/>
         </Box>
+        <Stack spacing={3}>
+          <FilterAndSort/>
 
-        <FilterAndSort/>
-
-        <Stack>
+          <Stack>
           {tasks.map(task => (
             <TaskList
               key={task.id}
