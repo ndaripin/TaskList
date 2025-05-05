@@ -18,10 +18,15 @@ export const TaskList = ({ text, onDelete, completed, onToggle, onEdit, onKeyDow
       }}
     >
       <Box display="flex" alignItems="center" flexGrow={1}>
-        <Checkbox checked={completed} onChange={onToggle} sx={{ mr: 1,  
+        <Checkbox checked={completed} onChange={onToggle} disabled={text.trim() === ''} 
+        sx={{ 
+            mr: 1,  
             color: 'purple',
             '&.Mui-checked': {
-            color: 'purple',}, 
+            color: 'purple',},
+            '&.Mui-disabled':{
+            color: 'purple',
+            }
         }} />
         <TextField
           variant="standard"
