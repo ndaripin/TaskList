@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox, IconButton, ListItem, ListItemText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const TaskItem = ({ text, onDelete }) => {
+export const TaskItem = ({ text, onDelete, completed, onToggle }) => {
   return (
     <ListItem
       sx={{
@@ -19,8 +19,9 @@ export const TaskItem = ({ text, onDelete }) => {
         </IconButton>
       }
     >
-      <Checkbox sx={{ mr: 1 }} />
-      <ListItemText primary={text} />
+      <Checkbox checked={completed} onChange={onToggle} sx={{ mr: 1 }} />
+      <ListItemText primary={text} 
+      sx={{ textDecoration: completed ? 'line-through' : 'none' }}/>
     </ListItem>
   );
 };

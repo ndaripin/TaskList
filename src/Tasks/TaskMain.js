@@ -10,6 +10,7 @@ export const TaskMain = () => {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortMode, setSortMode] = useState('newest');
+  const [filterMode, setFilterMode] = useState('all');
 
   const handleAddClick = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
@@ -18,6 +19,7 @@ export const TaskMain = () => {
     const newTask = {
       text,
       createdAt: new Date().toISOString(),
+      completed: false,
     };
     setTasks([...tasks, newTask]);
   };
@@ -30,12 +32,35 @@ export const TaskMain = () => {
     setSortMode(mode);
   };
 
-  const sortedTasks = [...tasks].sort((a, b) => {
-    if (sortMode === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
-    if (sortMode === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
-    if (sortMode === 'az') return a.text.localeCompare(b.text);
-    if (sortMode === 'za') return b.text.localeCompare(a.text);
-    return 0;
+  const handleToggleComplete = (taskToToggle) => {
+    setTasks(tasks.map(task =>
+      task === taskToToggle
+        ? { ...task, completed: !task.completed }
+        : task
+    ));
+  };
+
+  const sortedTasks = [
+    ...tasks.filter((task) => !task.completed).sort((a, b) => {
+      if (sortMode === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sortMode === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+      if (sortMode === 'az') return a.text.localeCompare(b.text);
+      if (sortMode === 'za') return b.text.localeCompare(a.text);
+      return 0;
+    }),
+    ...tasks.filter((task) => task.completed).sort((a, b) => {
+      if (sortMode === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sortMode === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+      if (sortMode === 'az') return a.text.localeCompare(b.text);
+      if (sortMode === 'za') return b.text.localeCompare(a.text);
+      return 0;
+    }),
+  ];
+
+  const filteredTasks = sortedTasks.filter(task => {
+    if (filterMode === 'complete') return task.completed;
+    if (filterMode === 'incomplete') return !task.completed;
+    return true;
   });
 
   return (
@@ -43,7 +68,7 @@ export const TaskMain = () => {
       <Stack spacing={3}>
         <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
           <SearchBar placeholderText="Search for tasks" />
-          <FilterButton onSortChange={handleSortChange}/>
+          <FilterButton onSortChange={handleSortChange} onFilterChange={setFilterMode}/>
           <AddButton onClick={handleAddClick} />
         </Box>
         <Box display="flex" justifyContent="center">
@@ -53,10 +78,14 @@ export const TaskMain = () => {
             }}
           >
             <List sx={{ width: '100%' }} spacing={3}>
-            {sortedTasks.map((task, index) => (
-                <TaskItem key={index} text={task.text} 
-                onDelete={() => handleDeleteTask(task)} />
-              ))}
+            {filteredTasks.map((task, index) => (
+              <TaskItem
+                key={index}
+                text={task.text}
+                completed={task.completed}
+                onToggle={() => handleToggleComplete(task)}
+                onDelete={() => handleDeleteTask(task)}
+                />))}
             </List>
           </Box>
         </Box>

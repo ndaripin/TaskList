@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IconButton, Menu, MenuItem, MenuList, Paper, Popover, Box } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
-export const FilterButton = ({onSortChange}) => {
+export const FilterButton = ({onSortChange, onFilterChange}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [sortAnchorEl, setSortAnchorEl] = useState(null);
   const [filterAnchorEl, setFilterAnchorEl] = useState(null);
@@ -60,9 +60,9 @@ export const FilterButton = ({onSortChange}) => {
         open={Boolean(filterAnchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>All</MenuItem>
-        <MenuItem>Complete</MenuItem>
-        <MenuItem>Incomplete</MenuItem>
+        <MenuItem onClick={() => onFilterChange('all')}>All</MenuItem>
+        <MenuItem onClick={() => onFilterChange('complete')}>Complete</MenuItem>
+        <MenuItem onClick={() => onFilterChange('incomplete')}>Incomplete</MenuItem>
       </Menu>
     </>
   );
