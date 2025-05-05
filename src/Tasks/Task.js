@@ -6,6 +6,36 @@ import { FilterAndSort } from './FilterAndSort';
 import { v4 as uuidv4 } from 'uuid';
 import { TaskList } from './TaskList';
 
+const getBackgroundImage = () => {
+  const hour = new Date().getHours();
+  if (hour >= 4 && hour < 6) return '/4-6am.jpg';
+  if (hour >= 6 && hour < 8) return '/6-8am.jpg';
+  if (hour >= 8 && hour < 10) return '/8-10am.jpg';
+  if (hour >= 10 && hour < 16) return '/10-4am.jpg';
+  if (hour >= 16 && hour < 18) return '/4-6pm.jpg';
+  if (hour >= 18 && hour < 20) return '/6-8pm.jpg';
+  if (hour >= 20 && hour < 22) return '/8-10pm.jpg';
+  return '/10-4pm.jpg';
+};
+
+const getTimeMessage = () => {
+  const hour = new Date().getHours();
+  if (hour >= 4 && hour < 6) return 'In wildest dreams, I never dreamed of this';
+  if (hour >= 6 && hour < 8) return 'It’s golden like daylight';
+  if (hour >= 8 && hour < 10) return 'Are you ready for it?';
+  if (hour >= 10 && hour < 16) return 'My aura’s moonstone';
+  if (hour >= 16 && hour < 18) return 'Wondrous time gave me the blues and then purple-pink skies';
+  if (hour >= 18 && hour < 20) return 'I just wanna stay in that lavender haze';
+  if (hour >= 20 && hour < 22) return 'Flying in a dream, stars by the pocketful';
+  return 'Midnights become my afternoons';
+};
+
+const getTextColor = () => {
+  const hour = new Date().getHours();
+  if (hour >= 4 && hour < 20) return 'black';
+  return 'secondary.main';
+}
+
 export const Task = () => {
   const [tasks, setTasks] = useState(() => {
     try {
@@ -111,9 +141,20 @@ export const Task = () => {
 
 
   return (
-    <Box sx={{ pl: '20%', pr: '20%', pt: 10 }}>
+    <Box
+      sx={{
+        pl: '20%',
+        pr: '20%',
+        pt: 10,
+        minHeight: '100vh',
+        backgroundImage: `url(${getBackgroundImage()})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }}
+    >
       <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ paddingBottom: 6 }}>
-        <Typography variant='h4'>Welcome!</Typography>
+        <Typography variant='h4' color='secondary.main'>Welcome!</Typography>
         <PillButton icon={<AddRoundedIcon fontSize="small" />} label="New Task" bgColor='primary.main' Color='secondary.main' onClick={handleAddTask} />
       </Box>
 
@@ -141,6 +182,19 @@ export const Task = () => {
           ))}
         </Stack>
       </Stack>
+      <Typography 
+        variant="subtitle1"
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          color: {getTextColor},
+        }}
+      >
+        {getTimeMessage()}
+      </Typography>
     </Box>
   );
 };

@@ -6,8 +6,8 @@ export const TaskList = ({ text, onDelete, completed, onToggle, onEdit, onKeyDow
   return (
     <ListItem
       sx={{
-        bgcolor: 'whitesmoke',
-        borderRadius: 4,
+        bgcolor: 'secondary.main',
+        borderRadius: 1,
         mb: 3,
         display: 'flex',
         alignItems: 'center',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
 
-export const RectangleButton = ({ onClick, icon, label, bgColor='white', Color='purple' }) => {
+export const RectangleButton = ({ onClick, icon, label, bgColor='secondary.main', Color='primary.main' }) => {
   return (
     <Button 
       onClick={onClick} 

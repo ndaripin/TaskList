@@ -36,7 +36,7 @@ export const FilterAndSort = ({ onSortChange, onFilterChange, shownCount = 0, to
     <Stack spacing={3}>
        <Box display="flex" flexDirection={isSmallScreen ? 'column' : 'row'} justifyContent="space-between"
        alignItems={isSmallScreen ? 'flex-start' : 'center'} gap={1}>
-        <Typography variant='subtitle1'>
+        <Typography variant='subtitle1' color='secondary.main'>
           Showing {shownCount} of {totalCount} tasks
         </Typography>
 
