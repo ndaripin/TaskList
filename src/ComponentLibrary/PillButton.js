@@ -1,32 +1,23 @@
 import React from 'react';
-import { Button, useMediaQuery, useTheme, Tooltip } from '@mui/material';
+import { Button } from '@mui/material';
 
-export const PillButton = ({ onClick, icon, label, bgColor = 'white', Color = 'purple' }) => {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+export const PillButton = ({ onClick, icon, label, bgColor='secondary.main', Color='primary.main' }) => {
   return (
-    <Tooltip title={label} disableHoverListener={!isSmallScreen}>
-      <Button
-        onClick={onClick}
-        variant="contained"
-        sx={{
-          bgcolor: bgColor,
-          color: Color,
-          borderRadius: '9999px',
-          px: isSmallScreen ? 1.2 : 2,
-          minWidth: isSmallScreen ? 'auto' : undefined,
-          textTransform: 'none',
-          '&:hover': {
-            bgcolor: bgColor,
-          }
-        }}
-      >
-        {isSmallScreen ? icon : <>
-          {icon}
-          {label}
-        </>}
-      </Button>
-    </Tooltip>
+    <Button 
+      onClick={onClick} 
+      variant="contained"
+      startIcon={icon}
+      sx={{ 
+        bgcolor: bgColor, 
+        borderRadius: '9999px', 
+        color: Color, 
+        px: 2, 
+        textTransform: 'none'
+      }}
+    >
+      {label}
+    </Button>
   );
 };
+
+

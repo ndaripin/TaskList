@@ -25,12 +25,7 @@ export const TaskMain = () => {
   };
 
   const handleDeleteTask = (taskToDelete) => {
-    if (tasks.length === 1) {
-      setTasks([{ ...tasks[0], text: '' }]); // just clear the text
-    } else {
-      setTasks(tasks.filter(task => task.id !== id));
-    }
-    
+    setTasks(tasks.filter((task) => task !== taskToDelete));
   };
 
   const handleSortChange = (mode) => {

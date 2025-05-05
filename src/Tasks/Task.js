@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { PillButton } from '../ComponentLibrary/PillButton'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { FilterAndSort } from './FilterAndSort';
@@ -7,11 +7,44 @@ import { v4 as uuidv4 } from 'uuid';
 import { TaskList } from './TaskList';
 
 export const Task = () => {
-  const [tasks, setTasks] = useState([
-    { id: uuidv4(), text: '', completed: false, createdAt: new Date().toISOString() }
-  ]);
+  const [tasks, setTasks] = useState(() => {
+    try {
+      const stored = localStorage.getItem('taskList');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch (error) {
+      console.error('Failed to load tasks:', error);
+    }
+  
+    return [{ id: uuidv4(), text: '', completed: false, createdAt: new Date().toISOString() }];
+  });
+  
   const [filterMode, setFilterMode] = useState('all');
   const [sortMode, setSortMode] = useState('newest');
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('taskList');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setTasks(parsed);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load tasks:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('taskList', JSON.stringify(tasks));
+    } catch (error) {
+      console.error('Failed to save tasks:', error);
+    }
+  }, [tasks]);
 
   const handleAddTask = () => {
     setTasks([...tasks, { id: uuidv4(), text: '', completed: false, createdAt: new Date().toISOString() }]);
@@ -39,10 +72,11 @@ export const Task = () => {
 
   const handleKeyDown = (e, id, text) => {
     if (e.key === 'Enter' && text.trim() !== '') {
-      const isLast = tasks[tasks.length - 1].id === id;
-      if (isLast) handleAddTask();
+      e.preventDefault();
+      e.target.blur();
     }
   };
+  
 
   const handleFilterChange = (mode) => {
     setFilterMode(mode);
@@ -59,12 +93,6 @@ export const Task = () => {
       return 0;
     });
   };
-
-  const filteredTasks = tasks.filter(task => {
-    if (filterMode === 'complete') return task.completed;
-    if (filterMode === 'incomplete') return !task.completed;
-    return true;
-  });
 
   // Split completed and incomplete
   const incompleteTasks = tasks.filter(task => !task.completed);
@@ -84,9 +112,9 @@ export const Task = () => {
 
   return (
     <Box sx={{ pl: '20%', pr: '20%', pt: 10 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ paddingBottom: 4 }}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ paddingBottom: 6 }}>
         <Typography variant='h4'>Welcome!</Typography>
-        <PillButton icon={<AddRoundedIcon fontSize="small" />} label="New Task" bgColor='purple' Color='white' onClick={handleAddTask} />
+        <PillButton icon={<AddRoundedIcon fontSize="small" />} label="New Task" bgColor='primary.main' Color='secondary.main' onClick={handleAddTask} />
       </Box>
 
       <Stack spacing={3}>

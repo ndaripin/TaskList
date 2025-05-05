@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, useMediaQuery, useTheme} from '@mui/material';
 import { RectangleButton } from '../ComponentLibrary/RectangleButton';
 import { PillButton } from '../ComponentLibrary/PillButton';
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import SwapVertRoundedIcon from '@mui/icons-material/SwapVertRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 
+
 export const FilterAndSort = ({ onSortChange, onFilterChange, shownCount = 0, totalCount = 0, filterMode, sortMode }) => {
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [showSortOptions, setShowSortOptions] = useState(false);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const toggleFilter = () => {
     setShowFilterOptions(!showFilterOptions);
@@ -30,8 +33,9 @@ export const FilterAndSort = ({ onSortChange, onFilterChange, shownCount = 0, to
   };
 
   return (
-    <Stack spacing={2}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+    <Stack spacing={3}>
+       <Box display="flex" flexDirection={isSmallScreen ? 'column' : 'row'} justifyContent="space-between"
+       alignItems={isSmallScreen ? 'flex-start' : 'center'} gap={1}>
         <Typography variant='subtitle1'>
           Showing {shownCount} of {totalCount} tasks
         </Typography>
@@ -51,7 +55,7 @@ export const FilterAndSort = ({ onSortChange, onFilterChange, shownCount = 0, to
       </Box>
 
       {showFilterOptions && (
-        <Stack direction="row" spacing={1} justifyContent={"flex-end"}>
+        <Stack direction="row" spacing={1} justifyContent={isSmallScreen ? 'flex-start' : 'flex-end'}>
           <RectangleButton 
             label="Show all" 
             icon={filterMode === 'all' ? <CheckRoundedIcon fontSize="small" /> : null}
@@ -71,7 +75,7 @@ export const FilterAndSort = ({ onSortChange, onFilterChange, shownCount = 0, to
       )}
 
       {showSortOptions && (
-        <Stack direction="row" spacing={1} justifyContent={"flex-end"}>
+        <Stack direction="row" spacing={1} justifyContent={isSmallScreen ? 'flex-start' : 'flex-end'}>
           <RectangleButton 
             label="Recently added" 
             icon={sortMode === 'newest' ? <CheckRoundedIcon fontSize="small" /> : null}
@@ -84,7 +88,7 @@ export const FilterAndSort = ({ onSortChange, onFilterChange, shownCount = 0, to
           />
         </Stack>
       )}
-      
+
     </Stack>
   );
 };

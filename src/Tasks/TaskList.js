@@ -8,24 +8,23 @@ export const TaskList = ({ text, onDelete, completed, onToggle, onEdit, onKeyDow
       sx={{
         bgcolor: 'whitesmoke',
         borderRadius: 4,
-        mb: 2,
+        mb: 3,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         '&:hover .delete-button': {
           opacity: 1,
         },
-      }}
-    >
+      }}>
       <Box display="flex" alignItems="center" flexGrow={1}>
         <Checkbox checked={completed} onChange={onToggle} disabled={text.trim() === ''} 
         sx={{ 
             mr: 1,  
-            color: 'purple',
+            color: 'primary.main',
             '&.Mui-checked': {
-            color: 'purple',},
+            color: 'primary.main',},
             '&.Mui-disabled':{
-            color: 'purple',
+            color: 'primary.main',
             }
         }} />
         <TextField
@@ -33,6 +32,7 @@ export const TaskList = ({ text, onDelete, completed, onToggle, onEdit, onKeyDow
           value={text}
           onChange={(e) => onEdit(e.target.value)}
           onKeyDown={onKeyDown}
+          disabled={completed}
           placeholder="Add a task"
           InputProps={{
             disableUnderline: true,
@@ -41,16 +41,14 @@ export const TaskList = ({ text, onDelete, completed, onToggle, onEdit, onKeyDow
               fontSize: '1rem',
             },
           }}
-          fullWidth
-        />
+          fullWidth/>
       </Box>
 
       <IconButton 
         onClick={onDelete} 
         className="delete-button"
-        sx={{ opacity: 0, transition: 'opacity 0.2s ease-in-out' }}
-      >
-        <DeleteIcon />
+        sx={{ opacity: 0, transition: 'opacity 0.2s ease-in-out' }}>
+        <DeleteIcon sx={{ color:'primary.main'}}/>
       </IconButton>
     </ListItem>
   );
