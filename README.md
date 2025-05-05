@@ -8,13 +8,16 @@ This app is a simple task tracker which allows you to add, modify, and delete ta
 ## How to run the application
 
 After cloning this repository, please install the following packages:
-`npm install`
-`npm install uuid`
-`npm install @mui/material @emotion/react @emotion/styled`
-`npm install react react-dom`
+```bash
+npm install uuid
+npm install @mui/material @emotion/react @emotion/styled
+npm install react react-dom
+```
 
 Now to start the application, please run:
-`npm start`
+```bash
+npm start
+```
 
 A window should open up, but the program should now be accesible on your browser at http://localhost:3000.
 
